@@ -37,3 +37,9 @@ Publication* stack_pop(Stack* stack) {
 int stack_size(const Stack* stack) {
     return stack ? stack->size : 0;
 }
+Publication* stack_get_at(const Stack* stack, int index) {
+    if (!stack || index < 0 || index >= stack->size) return NULL;
+    StackNode* current = stack->top;
+    for (int i = 0; i < index && current; i++) current = current->next;
+    return current ? &current->data : NULL;
+}
