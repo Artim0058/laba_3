@@ -43,3 +43,28 @@ Publication* stack_get_at(const Stack* stack, int index) {
     for (int i = 0; i < index && current; i++) current = current->next;
     return current ? &current->data : NULL;
 }
+void stack_insert_at(Stack* stack, int index, const Publication* data) {
+    if (!stack || index < 0 || index > stack->size) return;
+    if (index == 0) { stack_push(stack, data); return; }
+    StackNode* current = stack->top;
+    for (int i = 0; i < index - 1 && current; i++) current = current->next;
+    if (!current) return;
+    StackNode* node = (StackNode*)malloc(sizeof(StackNode));
+    if (node) {
+        node->data = *data;
+        node->next = current->next;
+        current->next = node;
+        stack->size++;
+    }
+}
+void stack_remove_at(Stack* stack, int index) {
+    if (!stack || index < 0 || index >= stack->size) return;
+    if (index == 0) { stack_pop(stack); return; }
+    StackNode* current = stack->top;
+    for (int i = 0; i < index - 1 && current; i++) current = current->next;
+    if (!current || !current->next) return;
+    StackNode* temp = current->next;
+    current->next = temp->next;
+    free(temp);
+    stack->size--;
+}
