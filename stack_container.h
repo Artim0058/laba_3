@@ -17,3 +17,7 @@ void stack_destroy(Stack* stack);
 Publication* stack_get_at(const Stack* stack, int index);
 void stack_insert_at(Stack* stack, int index, const Publication* data);
 void stack_remove_at(Stack* stack, int index);
+void stack_swap(Stack* stack, int i, int j);
+void stack_clear(Stack* stack);
+Publication* stack_to_array(const Stack* stack);
+Stack* array_to_stack(const Publication* arr, int n);

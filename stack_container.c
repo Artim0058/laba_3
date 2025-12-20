@@ -68,3 +68,24 @@ void stack_remove_at(Stack* stack, int index) {
     free(temp);
     stack->size--;
 }
+void stack_swap(Stack* stack, int i, int j) {
+    if (!stack || i < 0 || j < 0 || 
+        i >= stack->size || j >= stack->size || i == j) return;
+    if (i > j) { int t = i; i = j; j = t; }
+    Publication* a = stack_get_at(stack, i);
+    Publication* b = stack_get_at(stack, j);
+    if (a && b) {
+        Publication temp = *a;
+        *a = *b;
+        *b = temp;
+    }
+}
+void stack_clear(Stack* stack) {
+    if (!stack) return;
+    while (stack->top) {
+        StackNode* temp = stack->top;
+        stack->top = stack->top->next;
+        free(temp);
+    }
+    stack->size = 0;
+}
