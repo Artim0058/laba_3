@@ -10,3 +10,6 @@ typedef struct {
 } Stack;
 Stack* stack_create();
 void stack_push(Stack* stack, const Publication* data);
+Publication* stack_pop(Stack* stack);
+int stack_size(const Stack* stack);
+void stack_destroy(Stack* stack);
