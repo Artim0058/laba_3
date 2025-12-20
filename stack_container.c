@@ -15,3 +15,25 @@ void stack_push(Stack* stack, const Publication* data) {
         stack->size++;
     }
 }
+void stack_destroy(Stack* stack) {
+    if (!stack) return;
+    while (stack->top) {
+        StackNode* temp = stack->top;
+        stack->top = stack->top->next;
+        free(temp);
+    }
+    free(stack);
+}
+Publication* stack_pop(Stack* stack) {
+    if (!stack || !stack->top) return NULL;
+    StackNode* temp = stack->top;
+    static Publication result;
+    result = temp->data;
+    stack->top = temp->next;
+    free(temp);
+    stack->size--;
+    return &result;
+}
+int stack_size(const Stack* stack) {
+    return stack ? stack->size : 0;
+}
