@@ -89,3 +89,41 @@ void stack_clear(Stack* stack) {
     }
     stack->size = 0;
 }
+Publication* stack_begin(Stack* stack) {
+    return stack && stack->top ? &stack->top->data : NULL;
+}
+Publication* stack_end(Stack* stack) { return NULL; }
+Publication* stack_next(Stack* stack, Publication* current) {
+    if (!stack || !current) return NULL;
+    StackNode* node = stack->top;
+    while (node && &node->data != current) node = node->next;
+    return node && node->next ? &node->next->data : NULL;
+}
+Publication* stack_prev(Stack* stack, Publication* current) {
+    if (!stack || !current || !stack->top) return NULL;
+    if (&stack->top->data == current) return NULL;
+    StackNode* prev = NULL;
+    StackNode* node = stack->top;
+    while (node && &node->data != current) {
+        prev = node;
+        node = node->next;
+    }
+    return prev ? &prev->data : NULL;
+}
+Publication* stack_to_array(const Stack* stack) {
+    if (!stack || !stack->size) return NULL;
+    Publication* arr = malloc(sizeof(Publication) * stack->size);
+    if (!arr) return NULL;
+    StackNode* current = stack->top;
+    for (int i = stack->size - 1; i >= 0 && current; i--) {
+        arr[i] = current->data;
+        current = current->next;
+    }
+    return arr;
+}
+Stack* array_to_stack(const Publication* arr, int n) {
+    Stack* stack = stack_create();
+    if (!stack) return NULL;
+    for (int i = n - 1; i >= 0; i--) stack_push(stack, &arr[i]);
+    return stack;
+}
