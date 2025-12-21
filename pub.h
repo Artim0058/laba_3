@@ -21,4 +21,4 @@ typedef struct {
 void pub_print(const Publication* p);
 void pub_print_table(const Publication* p);
 int pub_compare(const Publication* a, const Publication* b, bool ascending);
-
+int pub_compare(const Publication* a, const Publication* b, bool ascending);

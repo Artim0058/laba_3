@@ -9,3 +9,10 @@ void pub_print(const Publication* p) {
            p->is_rinc ? "YES" : "NO",
            p->pages, p->citations);
 }
+int pub_compare(const Publication* a, const Publication* b, bool ascending) {
+    if (!a || !b) return 0;
+    int result = a->year - b->year;
+    if (result == 0) result = a->citations - b->citations;
+    if (result == 0) result = strcmp(a->title, b->title);
+    return ascending ? result : -result;
+}
